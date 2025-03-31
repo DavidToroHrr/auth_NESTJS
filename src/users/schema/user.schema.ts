@@ -31,6 +31,12 @@ export class User {
 
   @Prop({ type: Date, required: false })
   verificationCodeExpires?: Date;
+
+  @Prop({ type: String, required: false })
+  verificationSMS?: string;
+
+  @Prop({ type: Date, required: false })
+  verificationSMSExpires?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

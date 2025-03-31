@@ -4,6 +4,7 @@ import {
     IsString,
     MinLength,
     IsOptional,
+    IsNumber,
   } from 'class-validator';
   
   export class CreateUserDto {
@@ -76,4 +77,20 @@ import {
     @IsNotEmpty()
     @IsString()
     code: string;
+  }
+
+
+  export class VerifySMSDto{
+    @IsNotEmpty()
+    @IsString()
+    code: string;
+
+    @IsNotEmpty()
+    @IsString()
+    phone:string
+
+  }
+
+  export class ResendSMSDto{
+    
   }

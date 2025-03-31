@@ -30,7 +30,7 @@ import {
     verifyUser(id: string): Promise<User>;
     login(
       loginDto: LoginDto,
-    ): Promise<{ accessToken: string; refreshToken: string; user: User }>;
+    ): Promise<{user: User }>;
     refreshToken(
       refreshToken: string,
     ): Promise<{ accessToken: string; refreshToken: string }>;
