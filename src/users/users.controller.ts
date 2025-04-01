@@ -84,7 +84,7 @@ import {
 
     @Post('verify-sms')
     verifyCode(@Body() verifySMSDto: VerifySMSDto){
-      return this.usersService.verifySms(verifySMSDto);
+      return this.usersService.verifySMS(verifySMSDto);
     }
 
     @Post('resend-code')

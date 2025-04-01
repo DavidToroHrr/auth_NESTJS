@@ -25,6 +25,12 @@ import {
     @IsEmail()
     phone: string;
 
+    @IsOptional()
+    @IsString()
+    role?:string
+
+    
+
   }
   
   export class UpdateUserDto {
@@ -40,6 +46,11 @@ import {
     @IsString()
     @MinLength(6)
     password?: string;
+
+    @IsNotEmpty()
+    @IsEmail()
+    phone?: string;
+
   }
   
   export class LoginDto {

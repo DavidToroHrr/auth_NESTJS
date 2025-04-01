@@ -20,9 +20,6 @@ export class User {
   @Prop({ default: false })
   isVerified: boolean;
 
-  @Prop({ default: 'user' })
-  role: string;
-
   @Prop({ type: String, required: false })
   refreshToken?: string;
 
@@ -37,6 +34,9 @@ export class User {
 
   @Prop({ type: Date, required: false })
   verificationSMSExpires?: Date;
+
+  @Prop({type: String, default: "editor"})
+  role: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

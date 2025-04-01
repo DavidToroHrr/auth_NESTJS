@@ -115,11 +115,16 @@ export class UsersService implements UserServiceInterface {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+
+    // Generate the SMS code
     const smsCode = Math.floor(100000 + Math.random() * 900000).toString(); 
     user.verificationSMS=smsCode;
+
     const verificationSMSExpires = new Date();
     verificationSMSExpires.setMinutes(verificationSMSExpires.getMinutes() + 2); 
     user.verificationSMSExpires=verificationSMSExpires;
+
+    //send the verification code to user with TWILIO
     this.smsService.sendSMS(user.phone,smsCode)
 
     await user.save();
@@ -277,7 +282,7 @@ export class UsersService implements UserServiceInterface {
     return { message: "the new SMS code was send succesfully" }
   }
 
-  async verifySms(verifySMSDto: VerifySMSDto): Promise<{ accessToken: string; refreshToken: string;user:User;}>{
+  async verifySMS(verifySMSDto: VerifySMSDto): Promise<{ accessToken: string; refreshToken: string;user:User;}>{
     const user= await this.userModel.findOne({phone:verifySMSDto.phone}).exec();
     if (!user){
       throw new NotFoundException("User not found with de given phone...")
@@ -293,6 +298,7 @@ export class UsersService implements UserServiceInterface {
     }
 
     user.isVerified=true;
+    
       // Generate tokens
     // Access the _id as a property of the document
     const tokens = await this.getTokens(user.id, user.email, user.role);

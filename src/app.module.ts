@@ -4,6 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { TwilioModule } from 'nestjs-twilio';
 import { SmsModule } from './sms/sms.module';
+import { ProductsModule } from './products/products.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './users/guards/jwt-auth.guard';
+import { RolesGuard } from './users/guards/roles.guard';
 
 @Module({
   imports: [
@@ -17,7 +21,17 @@ import { SmsModule } from './sms/sms.module';
         uri: configService.get('MONGODB_URI'),
       }),
     }),
-    UsersModule
+    UsersModule,ProductsModule
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
 export class AppModule {}
