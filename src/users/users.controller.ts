@@ -21,22 +21,25 @@ import {
     VerifySMSDto
   } from './dto/user.dto';
   import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { Public } from './decorators/public.decorator';
   
   @Controller('users')
   export class UsersController {
     constructor(private readonly usersService: UsersService) {}
-  
+    @Public()
     @Post('signup')
     async create(@Body() createUserDto: CreateUserDto) {
       await this.usersService.create(createUserDto);
       return { message: 'User registered successfully. Please check your email for verification code.' };
     }
-  
+
+    @Public()
     @Post('verify-email')
     verifyEmail(@Body() verifyEmailDto: VerifyEmailDto) {
       return this.usersService.verifyEmail(verifyEmailDto);
     }
   
+    @Public()
     @HttpCode(HttpStatus.OK)
     @Post('login')
     login(@Body() loginDto: LoginDto) {
@@ -82,11 +85,13 @@ import {
       return this.usersService.changePassword(id, changePasswordDto);
     }
 
+    @Public()
     @Post('verify-sms')
     verifyCode(@Body() verifySMSDto: VerifySMSDto){
       return this.usersService.verifySMS(verifySMSDto);
     }
-
+    
+    @Public()
     @Post('resend-code')
     resendCode(@Body('phone') phone:string){
       return this.usersService.resendSMS(phone);
