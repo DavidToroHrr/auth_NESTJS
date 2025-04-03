@@ -22,6 +22,7 @@ import {
   } from './dto/user.dto';
   import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Public } from './decorators/public.decorator';
+import { Roles } from './decorators/roles.decorator';
   
   @Controller('users')
   export class UsersController {
@@ -46,37 +47,38 @@ import { Public } from './decorators/public.decorator';
       return this.usersService.login(loginDto);
     }
   
+    //seguridad?
+    @Public()
     @HttpCode(HttpStatus.OK)
     @Post('refresh-token')
     refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
       return this.usersService.refreshToken(refreshTokenDto.refreshToken);
     }
   
-    @UseGuards(JwtAuthGuard)
-    @Get()
+    @Public()
     findAll() {
       return this.usersService.findAll();
     }
-  
-    @UseGuards(JwtAuthGuard)
+    
+    @Public()
     @Get(':id')
     findOne(@Param('id') id: string) {
       return this.usersService.findOne(id);
     }
-  
-    @UseGuards(JwtAuthGuard)
+    
+    @Public()
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
       return this.usersService.update(id, updateUserDto);
     }
   
-    @UseGuards(JwtAuthGuard)
+    @Public()
     @Delete(':id')
     remove(@Param('id') id: string) {
       return this.usersService.remove(id);
     }
   
-    @UseGuards(JwtAuthGuard)
+    @Public()
     @Post(':id/change-password')
     changePassword(
       @Param('id') id: string,
@@ -90,7 +92,7 @@ import { Public } from './decorators/public.decorator';
     verifyCode(@Body() verifySMSDto: VerifySMSDto){
       return this.usersService.verifySMS(verifySMSDto);
     }
-    
+
     @Public()
     @Post('resend-code')
     resendCode(@Body('phone') phone:string){
